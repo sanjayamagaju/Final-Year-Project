@@ -1,0 +1,225 @@
+{% extends 'navigation.html' %}
+{% load static %}
+
+{% block title %}
+Other Campaigns
+{% endblock title %}
+
+
+{% block content %}
+
+<!-- khalti API -->
+<script src="https://khalti.s3.ap-south-1.amazonaws.com/KPG/dist/2020.12.17.0.0.0/khalti-checkout.iffe.js"></script>
+
+<style>
+  .add_camp {
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+    font-size: 20px;
+  }
+
+  .add_camp:hover {
+    color: white;
+  }
+
+  .oth_camp {
+    padding-top: 20px;
+    padding-bottom: 10px;
+    color: rgb(81, 81, 87);
+  }
+
+  body {
+    margin: 0;
+    background-color: rgb(202, 202, 202);
+  }
+
+  .container {
+    border-bottom: 15px solid rgb(202, 202, 202);
+    border-radius: 50px;
+  }
+
+  .row {
+    background-color: rgb(152, 174, 190);
+    border-radius: 20px;
+  }
+
+  .row:after {
+    content: "";
+    display: table;
+    clear: both
+  }
+
+  .column-66 {
+    width: 60%;
+    padding: 3%;
+    vertical-align: middle;
+  }
+
+  .column-33 {
+    float: left;
+    width: 40%;
+    padding: 20px;
+    border-right: 10px solid rgb(255, 255, 255);
+  }
+
+  .button {
+    margin-left: 40%;
+    border: none;
+    padding: 14px 28px;
+    border-radius: 40px;
+    cursor: pointer;
+    background-color: #04AA6D;
+  }
+
+  .button:hover {
+    background-color: #db457f;
+  }
+
+  .donate_here {
+    text-decoration: none;
+    color: white;
+    font-size: 16px;
+  }
+
+  .donate_here:hover {
+    color: #ffffff;
+  }
+
+  .camp_img {
+    display: block;
+    height: 100%;
+    max-width: 100%;
+  }
+
+  @media screen and (max-width: 1000px) {
+
+    .column-66,
+    .column-33 {
+      width: 100%;
+      text-align: center;
+    }
+
+    .camp_img {
+      margin: auto;
+    }
+  }
+
+  .victim {
+    font-size: 22px;
+    text-decoration: none;
+    color: white;
+  }
+
+  .target {
+    font-size: 18px;
+  }
+
+  .progress_text {
+    float: right;
+    color: blue;
+    padding-top: 8px;
+
+  }
+</style>
+
+<!-- Campagn add from frontend -->
+<div>
+  <button type="button" class="btn btn-secondary" style="width: 90%; margin-left: 5%; margin-top: 2%;">
+    <a href="{% url 'create' %}" class="add_camp"><b><i class="fas fa-plus"></i>&nbsp;Add Campaign</b></a>
+  </button>
+
+</div>
+
+<div style="text-align:center">
+  <h1 class="oth_camp"><b>---Other Campaigns---</b></h1>
+</div>
+
+<!-- Campaign Section -->
+{% for other_campaign in other_campaigns %}
+<div class="container" style="background-color:#f1f1f1">
+  <div class="row">
+    <div class="column-33">
+      <img src="{% if other_campaign.Image %}
+      {{other_campaign.Image.url}}
+      {% else %}
+      {% static './Images/blank.jpg' %}
+      {% endif %}" class="camp_img" alt="App">
+    </div>
+    <div class="column-66">
+      <a href="{% url 'detail' other_campaign.id %}" class="victim"><b>Victim: {{other_campaign.Name}}</b></a>
+      <div class="target"><b><i>Target Amount:</i> {{other_campaign.Target}}</b></div>
+      <div class="target"><b></b><i>Collected Amount:</i> {{other_campaign.Collected}}</div>
+      <br>
+      <p><b>Info: {{other_campaign.Info}}</b></p>
+      <br>
+      <div class="progress">
+        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75"
+          aria-valuemin="0" aria-valuemax="100" style="width: 75%"></div>
+      </div>
+      <div class="progress_text">Rs. {{ other_campaign.Collected }} - Done</div>
+      <br>
+      <br>
+      <button id="payment-button" class="button donate_here">Donate Here</button>
+      <br>
+      <div style="float: right;">Date_added: {{other_campaign.Date_added}}</div>
+    </div>
+    <br>
+  </div>
+</div>
+
+<!-- progress bar script -->
+
+<script>
+  var progress_bar = document.querySelectorAll(".progress-bar");
+  for (var i = 0; progress_bar[i]; i++) {
+    var progress_bars = progress_bar[i];
+    var progpercent = {{ other_campaign.Collected }} / {{other_campaign.Target}};
+  }
+  progress_bars.style.width = `${progpercent * 100}%`;
+</script>
+
+<!-- khalti API js -->
+<script>
+  var config = {
+    // replace the publicKey with yours
+    "publicKey": "test_public_key_799339a43d6d4b1ab360287fb7e257c8",
+    "productIdentity": "{{other_campaign.id}}",
+    "productName": "{{other_campaign.Name}}",
+    "productUrl": "http://localhost:8000",
+    "paymentPreference": [
+      "KHALTI",
+      "EBANKING",
+      "MOBILE_BANKING",
+      "CONNECT_IPS",
+      "SCT",
+    ],
+    "eventHandler": {
+      onSuccess(payload) {
+        // hit merchant api for initiating verfication
+        console.log(payload);
+      },
+      onError(error) {
+        console.log(error);
+      },
+      onClose() {
+        console.log('widget is closing');
+      }
+    }
+  };
+
+  var checkout = new KhaltiCheckout(config);
+  var btn = document.querySelectorAll(".button");
+  for (var i = 0; btn[i]; i++) {
+    var btns = btn[i];
+    btns.onclick = function () {
+      var amt = window.prompt("Enter the amount you want to donate: ")
+      // minimum transaction amount must be 10, i.e 1000 in paisa.
+      checkout.show({ amount: parseInt(amt) * 100});
+    }
+  }
+</script>
+
+{% endfor %}
+
+
+{% endblock content %}

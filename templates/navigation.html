@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/CSS" href="{% static './CSS/style.css' %}">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <!-- title -->
+    <title>
+        {% block title %}
+
+        {% endblock title %}
+    </title>
+</head>
+
+<body>
+    <!-- navigation  -->
+    <header>
+        <div class="fixed-top ft">
+            <nav class="navbar navbar-light bg-light">
+                <div class="container-fluid">
+                    <img src="{% static './Images/Heart.png' %}" class="img-thumbnail" alt="logo" height="100px"
+                        width="100px">
+
+                    <form class="d-flex" action="{% url 'search' %}" method="GET">
+                        <input class="form-control me-2" type="search" placeholder="Search Campaigns..."
+                            aria-label="Search" name="search_term" value="{{search_term}}">
+                        <button class="btn btn-outline-success" type="submit"><i class="fas fa-search"></i></button>
+                    </form>
+
+                    <!-- dark mode -->
+                    <button onclick="myFunction()" class="dark-md">Dark mode</button>
+                </div>
+            </nav>
+
+            <div class="topnav" id="myTopnav">
+                <a class="nav-link active" aria-current="page" href="{% url 'home' %}"><i
+                        class="fa fa-fw fa-home"></i>&nbsp;Home</a>
+                <a class="nav-link" href="#"><i class="fas fa-question-circle"></i>&nbsp;How It Works?</a>
+                <a class="nav-link" href="{% url 'gallery' %}"><i class="fas fa-image"></i>&nbsp;Gallery</a>
+                <a class="nav-link dropdown-toggle" id="navbarDarkDropdownMenuLink" role="button"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-hand-point-down"></i>&nbsp;Donate where?</a>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                    <li>
+                        <a class="dropdown-item" href="{% url 'campaign' %}"><i class="far fa-fire-alt"></i>&nbsp;Donate
+                            for Campaigns</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="#"><i class="fad fa-clock"></i>&nbsp;Donate for Future
+                            Proofing</a>
+                    </li>
+                </ul>
+                <!-- to check if user is logged in or not using is_authenticated -->
+                {% if request.user.is_authenticated %}
+                <a class="nav-link" href="{% url 'logout' %}"><i class="fa fa-fw fa-user"></i>&nbsp;Logout</a>
+                {% else %}
+                <a class="nav-link" href="{% url 'login' %}"><i class="fa fa-fw fa-user"></i>&nbsp;Log In</a>
+                {% endif %}
+                
+                <p class="hello-user"><i class="fal fa-hand-paper"></i>&nbsp;Hello,{{request.user}}</p>
+
+                <a href="javascript:void(0);" class="icon" onclick="myFunction1()">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+        </div>
+    </header>
+
+
+    {% block content %}
+
+    {% endblock content %}
+
+    <!-- footer -->
+    <footer class="container-footer">
+        <div class="row-footer">
+            <div class="column-footer">
+                <h2><b><u>Life Savior</u></b></h2>
+                <img src="{% static './Images/Heart.png' %}" class="img-thumbnail" alt="logo" height="100px"
+                    width="100px">
+                <br>
+                <p>Life Savior: Trusted online fundraising platform for someone who are financially weak for their
+                    treatment. Start a donation in few minutes. Get help. Give kindness. Save Life.</p>
+            </div>
+            <div class="column-footer">
+                <h2 style="padding-left: 15%;">Links Shortcuts</h2>
+                <br>
+                <ul class="footer-ul">
+                    <li>
+                        <a class="footer-link" href="{% url 'home' %}">Home</a>
+                    </li>
+                    <li>
+                        <a class="footer-link" href="#">How It Works?</a>
+                    </li>
+                    <li>
+                        <a class="footer-link" href="{% url 'gallery' %}">Gallery</a>
+                    </li>
+                    <li>
+                        <a class="footer-link" href="{% url 'campaign' %}">Donate for Campaigns</a>
+                    </li>
+                    <li>
+                        <a class="footer-link" href="#">Donate for Future Proofing</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="column-footer">
+                <h2 style="padding-left: 15%;">Contact Us</h2>
+                <br>
+                <ul class="footer-ul">
+                    <li>
+                        <div style="color: white;"><i class="fas fa-home-lg"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            Bhaktapur, Nepal</div>
+                    </li>
+                    <li>
+                        <div style="color: white;"><i class="fas fa-phone-alt"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            +97798........</div>
+                    </li>
+                    <li>
+                        <div style="color: white;"><i
+                                class="far fa-envelope-square"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; info@gmail.com
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright"><b><i>Copyright &copy;:</i></b> Life Savior. All rights reserved.</div>
+    </footer>
+
+
+    <!-- script -->
+    <!-- responsive navbar -->
+    <script>
+        function myFunction1() {
+            var x = document.getElementById("myTopnav");
+            if (x.className === "topnav") {
+                x.className += " responsive";
+            } else {
+                x.className = "topnav";
+            }
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
+        </script>
+
+    <!-- dark mode -->
+    <script>
+        function myFunction() {
+            var element = document.body;
+            element.classList.toggle("dark-mode");
+        }
+    </script>
+</body>
+
+
+</html>

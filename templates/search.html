@@ -1,0 +1,152 @@
+{% extends 'navigation.html' %}
+{% load static %}
+
+{% block title %}
+Search result for {{search_term}}
+{% endblock title %}
+
+
+{% block content %}
+
+<style>
+    .nrts {
+        width: 100%;
+        padding: 14%;
+        background-color: rgb(135, 205, 226);
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    }
+
+    .container {
+        border-bottom: 15px solid rgb(202, 202, 202);
+        border-radius: 50px;
+    }
+
+    .row {
+        background-color: rgb(152, 174, 190);
+        border-radius: 20px;
+    }
+
+    .row:after {
+        content: "";
+        display: table;
+        clear: both
+    }
+
+    .column-66 {
+        width: 60%;
+        padding: 3%;
+        vertical-align: middle;
+    }
+
+    .column-33 {
+        float: left;
+        width: 40%;
+        padding: 20px;
+        border-right: 10px solid rgb(255, 255, 255);
+    }
+
+    .button {
+        margin-left: 40%;
+        border: none;
+        padding: 14px 28px;
+        border-radius: 40px;
+        cursor: pointer;
+        background-color: #04AA6D;
+    }
+
+    .button:hover {
+        background-color: #db457f;
+    }
+
+    .donate_here {
+        text-decoration: none;
+        color: white;
+        font-size: 16px;
+    }
+
+    .donate_here:hover {
+        color: #ffffff;
+    }
+
+    .camp_img {
+        display: block;
+        height: 100%;
+        max-width: 100%;
+    }
+
+    @media screen and (max-width: 1000px) {
+
+        .column-66,
+        .column-33 {
+            width: 100%;
+            text-align: center;
+        }
+
+        .camp_img {
+            margin: auto;
+        }
+    }
+
+    .victim {
+        font-size: 22px;
+        text-decoration: none;
+        color: white;
+
+    }
+
+    .target {
+        font-size: 18px;
+        text-decoration: underline;
+        font-style: italic;
+    }
+
+    .progress_text {
+        float: right;
+        color: blue;
+        padding-top: 8px;
+
+    }
+</style>
+
+<h2 class="heading font-weight-light text-center">Search result for "{{search_term}}"</h2>
+<hr>
+
+{% if other_campaigns %}
+{% for other_campaign in other_campaigns %}
+<div class="container" style="background-color:#f1f1f1">
+    <div class="row">
+        <div class="column-33">
+            <img src="{% if other_campaign.Image %}
+          {{other_campaign.Image.url}}
+          {% else %}
+          {% static './Images/blank.jpg' %}
+          {% endif %}" class="camp_img" alt="App">
+        </div>
+        <div class="column-66">
+            <a href="{% url 'detail' other_campaign.id %}" class="victim"><b>Victim: {{other_campaign.Name}}</b></a>
+            <div class="target"><b><i>Target Amount:</i> {{other_campaign.Target}}</b></div>
+            <div class="target"><b><i>Collected Amount:</i> {{other_campaign.Collected}}</b></div>
+            <br>
+            <p><b>Info: {{other_campaign.Info}}</b></p>
+            <br>
+            <div class="progress">
+                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+                    aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%"></div>
+            </div>
+            <div class="progress_text">75% - Done</div>
+            <br>
+            <button class="button"><a href="#" class="donate_here">Donate Here</a></button>
+            <br>
+            <div style="float: right;">Date_added: {{other_campaign.Date_added}}</div>
+        </div>
+        <br>
+    </div>
+</div>
+{% endfor %}
+{% else %}
+<h1 class="text-center nrts">"No results found&nbsp;&nbsp;<i class="fas fa-sad-cry"></i><i class="fas fa-sad-cry"></i><i
+        class="fas fa-sad-cry"></i>"</h2>
+    {% endif %}
+
+
+    {% endblock content %}

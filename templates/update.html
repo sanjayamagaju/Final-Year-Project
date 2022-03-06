@@ -1,0 +1,27 @@
+{% extends 'navigation.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block title %}
+Update {{camp_detail}}
+{% endblock title %}
+
+{% block content %}
+
+<style>
+    body{
+        background-color: rgb(203, 235, 166);
+    }
+</style>
+
+    <h2 class="heading font-weight-light text-center">Update {{camp_detail}}</h2>
+    <hr>
+    <div class="container w-50 card p-4 mt-4 user-form">
+        <form action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %} 
+            {{form|crispy}}
+            <br>
+            <input type="submit" value="Update" class="w-100 text-white text-center my-2 btn btn-info">
+        </form>
+    </div>
+{% endblock content %}
