@@ -8,9 +8,6 @@ Other Campaigns
 
 {% block content %}
 
-<!-- khalti API -->
-<script src="https://khalti.s3.ap-south-1.amazonaws.com/KPG/dist/2020.12.17.0.0.0/khalti-checkout.iffe.js"></script>
-
 <style>
   .add_camp {
     text-decoration: none;
@@ -159,7 +156,7 @@ Other Campaigns
       <div class="progress_text">Rs. {{ other_campaign.Collected }} - Done</div>
       <br>
       <br>
-      <button id="payment-button" class="button donate_here">Donate Here</button>
+      <a href="{% url 'khaltirequest' other_campaign.id %}"><button class="button donate_here">Donate Here</button></a>
       <br>
       <div style="float: right;">Date_added: {{other_campaign.Date_added}}</div>
     </div>
@@ -177,48 +174,6 @@ Other Campaigns
   }
   progress_bars.style.width = `${progpercent * 100}%`;
 </script>
-
-<!-- khalti API js -->
-<script>
-  var config = {
-    // replace the publicKey with yours
-    "publicKey": "test_public_key_799339a43d6d4b1ab360287fb7e257c8",
-    "productIdentity": "{{other_campaign.id}}",
-    "productName": "{{other_campaign.Name}}",
-    "productUrl": "http://localhost:8000",
-    "paymentPreference": [
-      "KHALTI",
-      "EBANKING",
-      "MOBILE_BANKING",
-      "CONNECT_IPS",
-      "SCT",
-    ],
-    "eventHandler": {
-      onSuccess(payload) {
-        // hit merchant api for initiating verfication
-        console.log(payload);
-      },
-      onError(error) {
-        console.log(error);
-      },
-      onClose() {
-        console.log('widget is closing');
-      }
-    }
-  };
-
-  var checkout = new KhaltiCheckout(config);
-  var btn = document.querySelectorAll(".button");
-  for (var i = 0; btn[i]; i++) {
-    var btns = btn[i];
-    btns.onclick = function () {
-      var amt = window.prompt("Enter the amount you want to donate: ")
-      // minimum transaction amount must be 10, i.e 1000 in paisa.
-      checkout.show({ amount: parseInt(amt) * 100});
-    }
-  }
-</script>
-
 {% endfor %}
 
 

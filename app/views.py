@@ -1,20 +1,29 @@
+from ast import If
 from dataclasses import fields
 from multiprocessing import context
 from pyexpat import model
 from re import template
 import re
+from tokenize import Name
+from typing_extensions import Self
 from urllib import request
+from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
+from django.views import View
+from matplotlib.pyplot import get
+from psutil import users
 from .forms import CreateUserForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.urls import reverse
 from django.contrib import messages
-from .models import Campaign, Gallery
-from .models import OtherCampaign
+from .models import Campaign, Gallery, OtherCampaign
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 from django.db.models import Q
+import requests
+from django.http import JsonResponse
 
 
 # Create your views here.
@@ -37,10 +46,51 @@ def gallery(request):
 # othercampaign page
 def othercampaign(request):
     context = {
-        'other_campaigns' : OtherCampaign.objects.all()
+        'other_campaigns' : OtherCampaign.objects.all(),
     }
     return render(request, 'othercampaign.html', context)
-    
+
+
+# khalti request view
+def khaltirequest(request, id):
+    context = {
+        'khalti_api' : get_object_or_404(OtherCampaign, pk=id)
+    }
+    return render(request, 'khaltirequest.html', context)
+
+
+def khaltiverify(request):
+    token = request.GET.get("token")
+    amount = request.GET.get("amount")
+    campaign_id = request.GET.get("campaign_id")
+    campaign_name = request.GET.get("campaign_name")
+    print(token, amount, campaign_id, campaign_name)
+
+    url = "https://khalti.com/api/v2/payment/verify/"
+    payload = {
+        "token": token,
+        "amount": amount
+    }
+    headers = {
+        "Authorization": "Key test_secret_key_ab4f4a7082cc41f6af3231fb36c82b95"
+    }
+
+    camp_objs = OtherCampaign.objects.get(id=campaign_id, Name=campaign_name)
+
+    response = requests.post(url, payload, headers = headers)
+    resp_dict = response.json()
+    if resp_dict.get("idx"):
+        success = True
+        # camp_objs.payment_completed = True
+        # camp_objs.save()
+    else: 
+        success = False
+
+    data = {
+        "success" : success
+    }
+    return JsonResponse(data)
+
 
 # detail page
 def detail(request, id):
@@ -48,6 +98,8 @@ def detail(request, id):
         'camp_detail' : get_object_or_404(OtherCampaign, pk=id) 
     }
     return render(request, 'detail.html', context)
+
+    
 
 # registerpage
 def registerPage(request):
@@ -152,18 +204,3 @@ def search(request):
     else:
         return redirect('home')
 
-
-
-# khalti payment gateway
-import requests
-
-url = "https://khalti.com/api/v2/payment/verify/"
-payload = {
-  "token": "QUao9cqFzxPgvWJNi9aKac",
-  "amount": 1000
-}
-headers = {
-  "Authorization": "Key test_secret_key_ab4f4a7082cc41f6af3231fb36c82b95"
-}
-
-response = requests.post(url, payload, headers = headers)

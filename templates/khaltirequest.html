@@ -1,0 +1,64 @@
+<html>
+<head>
+    <script src="https://khalti.s3.ap-south-1.amazonaws.com/KPG/dist/2020.12.17.0.0.0/khalti-checkout.iffe.js"></script>
+    <title>
+        Donation for {{khalti_api.Name}}
+    </title>
+</head>
+<body>
+    <button id="payment-button">Donate using Khalti</button>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        var config = {
+            // replace the publicKey with yours
+            "publicKey": "test_public_key_799339a43d6d4b1ab360287fb7e257c8",
+            "productIdentity": "Campaign_Id: {{khalti_api.id}}",
+            "productName": "Campaign_Name: {{khalti_api.Name}}",
+            "productUrl": "http://127.0.0.1:8000/",
+            "paymentPreference": [
+                "KHALTI",
+                "EBANKING",
+                "MOBILE_BANKING",
+                "CONNECT_IPS",
+                "SCT",
+                ],
+            "eventHandler": {
+                onSuccess (payload) {
+                    // hit merchant api for initiating verfication
+                    axios.get("/khaltiverify/", {
+                        params:  {
+                            "token" : payload.token,
+                            "amount" : payload.amount,
+                            "campaign_id" : "{{khalti_api.id}}",
+                            "campaign_name" : "{{khalti_api.Name}}"
+                        }
+                    }).then(function(resp){
+                        if(resp.data.success == true){
+                            alert("Thanks for your life saving donation :)")
+                            location.href = "/"
+                        }
+                        else{
+                            alert("Sorry, Error occurred :(")
+                            location.href = "{{request.build_absolute_uri}}"
+                        }
+                    })
+                },
+                onError (error) {
+                    console.log(error);
+                },
+                onClose () {
+                    console.log('widget is closing');
+                }
+            }
+        };
+
+        var checkout = new KhaltiCheckout(config);
+        var btn = document.getElementById("payment-button");
+        btn.onclick = function () {
+            var amt = window.prompt("Enter the amount you want to donate for {{other_campaign.Name}}: ")
+            // minimum transaction amount must be 10, i.e 1000 in paisa.
+            checkout.show({ amount: parseInt(amt) * 100});
+        }
+    </script>
+</body>
+</html>

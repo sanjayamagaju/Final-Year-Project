@@ -25,6 +25,7 @@ class OtherCampaign(models.Model):
     Collected = models.IntegerField()
     Info = models.CharField(max_length=300)
     Date_added = models.DateField(auto_now_add=True)
+    payment_completed = models.BooleanField(default=False, null=True, blank=True)
 
     def __str__(self):
         return self.Name
