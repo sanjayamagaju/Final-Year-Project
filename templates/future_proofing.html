@@ -1,0 +1,43 @@
+{% extends 'navigation.html' %}
+{% load static %}
+
+{% block title %}
+Donation for Future Proofing
+{% endblock title %}
+
+{% block content %}
+<style>
+    .card-donation-fp {
+        margin-top: 50px;
+        margin-left: 10%;
+    }
+    .dontate-khalti{
+        margin-left: 40%;
+        margin-top: 50px;
+    }
+</style>
+
+<div class="card text-white bg-success card-donation-fp" style="max-width: 80%;">
+    <h3 class="card-header text-center">Donation for Future Proofing</h3>
+    <br>
+    <div class="card-body">
+        <h5 class="card-title text-center text-dark">What is this for?</h5>
+        <hr>
+        <br>
+        <p class="card-text">Sometimes we hear sudden emergency case where a victim might need huge money within certain
+            time like a week or a month for quick treatment. So, Motive of this page is to collect the amount in
+            seperate
+            fund so that whenever such case appears we can easily and quickly manage money for them and save their life.
+            <hr>
+            <br>
+            <br> <span style="float: right;">Thank you for your Donation!!</span>
+            <br> <span style="float: right;">Keep Donating :)</span>
+            <br> <span style="float: right;">CEO:---Sanjaya Magaju</span>
+        </p>
+    </div>
+</div>
+
+<a href="#"><button type="button" class="btn btn-outline-success dontate-khalti">Donation For Future Proofing</button></a>
+
+
+{% endblock content %}

@@ -32,7 +32,7 @@
                     <form class="d-flex" action="{% url 'search' %}" method="GET">
                         <input class="form-control me-2" type="search" placeholder="Search Campaigns..."
                             aria-label="Search" name="search_term" value="{{search_term}}">
-                        <button class="btn btn-outline-success" type="submit"><i class="fas fa-search"></i></button>
+                        <button class="btn btn-outline-success search-btn" type="submit"><i class="fas fa-search"></i></button>
                     </form>
 
                     <!-- dark mode -->
@@ -41,10 +41,10 @@
             </nav>
 
             <div class="topnav" id="myTopnav">
-                <a class="nav-link active" aria-current="page" href="{% url 'home' %}"><i
+                <a class="nav-link {% if nav_bar == 'home' %} active {% endif %}" aria-current="page" href="{% url 'home' %}"><i
                         class="fa fa-fw fa-home"></i>&nbsp;Home</a>
-                <a class="nav-link" href="#"><i class="fas fa-question-circle"></i>&nbsp;How It Works?</a>
-                <a class="nav-link" href="{% url 'gallery' %}"><i class="fas fa-image"></i>&nbsp;Gallery</a>
+                <a class="nav-link {% if nav_bar == 'howitworks' %} active {% endif %}" href="{% url 'howitworks' %}"><i class="fas fa-question-circle"></i>&nbsp;How It Works?</a>
+                <a class="nav-link {% if nav_bar == 'gallery' %} active {% endif %}" href="{% url 'gallery' %}"><i class="fas fa-image"></i>&nbsp;Gallery</a>
                 <a class="nav-link dropdown-toggle" id="navbarDarkDropdownMenuLink" role="button"
                     data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="fas fa-hand-point-down"></i>&nbsp;Donate where?</a>
@@ -55,15 +55,15 @@
                             for Campaigns</a>
                     </li>
                     <li>
-                        <a class="dropdown-item" href="#"><i class="fad fa-clock"></i>&nbsp;Donate for Future
+                        <a class="dropdown-item" href="{% url 'future_proofing' %}"><i class="fad fa-clock"></i>&nbsp;Donate for Future
                             Proofing</a>
                     </li>
                 </ul>
                 <!-- to check if user is logged in or not using is_authenticated -->
                 {% if request.user.is_authenticated %}
-                <a class="nav-link" href="{% url 'logout' %}"><i class="fa fa-fw fa-user"></i>&nbsp;Logout</a>
+                <a class="nav-link {% if nav_bar == 'login' %} active {% endif %}" href="{% url 'logout' %}"><i class="fa fa-fw fa-user"></i>&nbsp;Logout</a>
                 {% else %}
-                <a class="nav-link" href="{% url 'login' %}"><i class="fa fa-fw fa-user"></i>&nbsp;Log In</a>
+                <a class="nav-link {% if nav_bar == 'logout' %} active {% endif %}" href="{% url 'login' %}"><i class="fa fa-fw fa-user"></i>&nbsp;Log In</a>
                 {% endif %}
                 
                 <p class="hello-user"><i class="fal fa-hand-paper"></i>&nbsp;Hello,{{request.user}}</p>

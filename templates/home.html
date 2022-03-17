@@ -45,7 +45,7 @@ Life Savior
     </button>
   </div>
   <div class="centered">*Your little help can save someone's precious Life*</div>
-  <h1 class="centered2">Start Your Donation</h1>
+  <a href="{% url 'campaign' %}"><h1 class="centered2">Start Your Donation</h1></a>
 </div>
 
 <br><br>
@@ -71,15 +71,23 @@ Life Savior
       <div class="text_camp">Date_Added: {{campaign.Date_added}}</div>
       <br>
       <div class="progress">
-        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75"
-          aria-valuemin="0" aria-valuemax="100" style="width: 75%"></div>
+        <div class="progress-bar bg-success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
       </div>
-      <div class="pr_text">75% - Done</div>
+      <div class="progress_text">Rs. {{ campaign.Collected }} - Done</div>
       <br>
       <br>
-      <a href="#" class="btn btn-primary">Donate</a>
+      <a href="{% url 'khaltirequest_camp' campaign.id %}" class="btn btn-primary">Donate</a>
     </div>
   </div>
+
+  <script>
+    var pro_bar = document.querySelectorAll(".progress-bar");
+    for (var i = 0; pro_bar[i]; i++) {
+      var pro_bars = pro_bar[i];
+      var progpercent = {{ campaign.Collected }} / {{campaign.Target}};
+    }
+    pro_bars.style.width = `${progpercent * 100}%`;
+  </script>
   {% endfor %}
 </div>
 

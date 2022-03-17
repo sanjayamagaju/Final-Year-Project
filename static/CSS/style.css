@@ -83,14 +83,14 @@ Header {
 .d-flex .me-2{
     border-radius: 20px;
 }
-.btn-outline-success{
+.search-btn{
     border: none !important;
     color: rgb(0, 0, 0) !important;
     font-size: 23px !important;
     margin-right: 1%;
     border-radius: 30px !important;
 }
-.btn-outline-success:hover{
+.search-btn:hover{
     border: 3px solid rgb(0, 0, 0) !important;
     color: rgb(247, 247, 247) !important;
 }

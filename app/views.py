@@ -1,6 +1,6 @@
 from ast import If
 from dataclasses import fields
-from multiprocessing import context
+from multiprocessing import Manager, context, managers
 from pyexpat import model
 from re import template
 import re
@@ -13,6 +13,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.views import View
 from matplotlib.pyplot import get
 from psutil import users
+from django.contrib.auth.models import User
 from .forms import CreateUserForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -31,25 +32,40 @@ from django.http import JsonResponse
 # homepage
 def home(request):
     context = {
-        'campaigns' : Campaign.objects.all()
+        'campaigns' : Campaign.objects.all(),
+        'nav_bar' : 'home'
     }
     return render(request,'home.html', context)
 
+# howitworks page
+def howitworks(request):
+    context = {
+        'nav_bar' : 'howitworks'
+    }
+    return render(request, 'howitworks.html', context)
 
 # gallery page
 def gallery(request):
     gallery_context = {
-        'galleryimg' : Gallery.objects.all()
+        'galleryimg' : Gallery.objects.all(),
+        'nav_bar' : 'gallery'
     }
     return render(request, 'gallery.html', gallery_context)
+
 
 # othercampaign page
 def othercampaign(request):
     context = {
-        'other_campaigns' : OtherCampaign.objects.all(),
+        'other_campaigns' : OtherCampaign.objects.all()
     }
     return render(request, 'othercampaign.html', context)
 
+# othercampaign page
+def future_proofing(request):
+    context = {
+        
+    }
+    return render(request, 'future_proofing.html', context)
 
 # khalti request view
 def khaltirequest(request, id):
@@ -58,6 +74,11 @@ def khaltirequest(request, id):
     }
     return render(request, 'khaltirequest.html', context)
 
+def khaltirequest_camp(request, id):
+    context = {
+        'khalti_api_2' : get_object_or_404(Campaign, pk=id)
+    }
+    return render(request, 'khaltirequest_camp.html', context)
 
 def khaltiverify(request):
     token = request.GET.get("token")
@@ -91,11 +112,42 @@ def khaltiverify(request):
     }
     return JsonResponse(data)
 
+def khaltiverify_camp(request):
+    token = request.GET.get("token")
+    amount = request.GET.get("amount")
+    camp_id = request.GET.get("camp_id")
+    camp_name = request.GET.get("camp_name")
+    print(token, amount, camp_id, camp_name)
+
+    url = "https://khalti.com/api/v2/payment/verify/"
+    payload = {
+        "token": token,
+        "amount": amount
+    }
+    headers = {
+        "Authorization": "Key test_secret_key_ab4f4a7082cc41f6af3231fb36c82b95"
+    }
+
+    camp_objs_camp = Campaign.objects.get(id=camp_id, Name=camp_name)
+
+    response_camp = requests.post(url, payload, headers = headers)
+    resp_dict_camp = response_camp.json()
+    if resp_dict_camp.get("idx"):
+        success = True
+        # camp_objs.payment_completed = True
+        # camp_objs.save()
+    else: 
+        success = False
+
+    data_camp = {
+        "success" : success
+    }
+    return JsonResponse(data_camp)
 
 # detail page
 def detail(request, id):
     context = {
-        'camp_detail' : get_object_or_404(OtherCampaign, pk=id) 
+        'camp_detail' : get_object_or_404(OtherCampaign, pk=id),
     }
     return render(request, 'detail.html', context)
 

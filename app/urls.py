@@ -3,11 +3,13 @@ from . import views
 
 urlpatterns = [
     path('', views.home, name="home"),
+    path('howitworks/', views.howitworks, name="howitworks"),
     path('search/', views.search, name="search"),
     path('register/', views.registerPage, name="register"),
     path('login/', views.loginPage, name="login"),
     path('logout/', views.logoutUser, name="logout"),
     path('othercampaign/', views.othercampaign, name="campaign"),
+    path('donation_future_proofing/', views.future_proofing, name="future_proofing"),
     path('detail/<int:id>/', views.detail, name='detail'),
     path('gallery/', views.gallery, name="gallery"),
 
@@ -16,5 +18,7 @@ urlpatterns = [
     path('othercampaign/delete/<int:pk>', views.CampaignDeleteView.as_view(), name="delete"),
 
     path('khalti-request/<int:id>/', views.khaltirequest, name='khaltirequest'),
+    path('khalti-request-camp/<int:id>/', views.khaltirequest_camp, name='khaltirequest_camp'),
     path('khaltiverify/', views.khaltiverify, name='khaltiverify'),
+    path('khaltiverify_camp/', views.khaltiverify_camp, name='khaltiverify_camp'),
 ]

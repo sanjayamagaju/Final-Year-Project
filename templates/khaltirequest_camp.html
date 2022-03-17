@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-Donation for {{khalti_api.Name}}
+Donation for {{khalti_api_2.Name}}
 {% endblock title %}
 
 
@@ -27,7 +27,7 @@ Donation for {{khalti_api.Name}}
 
 <script src="https://khalti.s3.ap-south-1.amazonaws.com/KPG/dist/2020.12.17.0.0.0/khalti-checkout.iffe.js"></script>
 
-<h2 class="donation_appreciate">We really appreciate your Donation for {{khalti_api.Name}} 😊😊😊</h2>
+<h2 class="donation_appreciate">We really appreciate your Donation for {{khalti_api_2.Name}} 😊😊😊</h2>
 
 <button type="button" id="payment-button" class="btn btn-success text-center dontate-khalti">Donate using Khalti</button>
 
@@ -36,8 +36,8 @@ Donation for {{khalti_api.Name}}
     var config = {
         // replace the publicKey with yours
         "publicKey": "test_public_key_799339a43d6d4b1ab360287fb7e257c8",
-        "productIdentity": "Campaign_Id: {{khalti_api.id}}",
-        "productName": "Campaign_Name: {{khalti_api.Name}}",
+        "productIdentity": "Camp_Id: {{khalti_api_2.id}}",
+        "productName": "Camp_Name: {{khalti_api_2.Name}}",
         "productUrl": "http://127.0.0.1:8000/",
         "paymentPreference": [
             "KHALTI",
@@ -53,8 +53,8 @@ Donation for {{khalti_api.Name}}
                     params: {
                         "token": payload.token,
                         "amount": payload.amount,
-                        "campaign_id": "{{khalti_api.id}}",
-                        "campaign_name": "{{khalti_api.Name}}"
+                        "camp_id": "{{khalti_api_2.id}}",
+                        "camp_name": "{{khalti_api_2.Name}}"
                     }
                 }).then(function (resp) {
                     if (resp.data.success == true) {
@@ -79,7 +79,7 @@ Donation for {{khalti_api.Name}}
     var checkout = new KhaltiCheckout(config);
     var btn = document.getElementById("payment-button");
     btn.onclick = function () {
-        var amt = window.prompt("Enter the amount you want to donate for {{khalti_api.Name}}: ")
+        var amt = window.prompt("Enter the amount you want to donate for {{khalti_api_2.Name}}: ")
         // minimum transaction amount must be 10, i.e 1000 in paisa.
         checkout.show({ amount: parseInt(amt) * 100 });
     }
