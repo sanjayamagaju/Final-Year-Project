@@ -36,7 +36,7 @@ Search result for {{search_term}}
             </div>
             <div class="progress_text">75% - Done</div>
             <br>
-            <button class="button"><a href="#" class="donate_here">Donate Here</a></button>
+            <button class="button"><a href="{% url 'khaltirequest' other_campaign.id %}" class="donate_here">Donate Here</a></button>
             <br>
             <div style="float: right;">Date_added: {{other_campaign.Date_added}}</div>
         </div>

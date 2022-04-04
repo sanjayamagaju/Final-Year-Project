@@ -26,12 +26,13 @@
             <p>Details: {{camp_detail.Info}}</p>
             <br>
             <div class="progress">
-                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
-                    aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%"></div>
+                <div class="progress-bar bg-success" role="progressbar" aria-valuenow="75" aria-valuemin="0"
+                    aria-valuemax="100" style="width: 75%"></div>
             </div>
             <div class="progress_text">Rs. {{ camp_detail.Collected }} - Done</div>
             <br>
-            <button class="button"><a href="{% url 'khaltirequest' camp_detail.id %}" class="donate_here">Donate Here</a></button>
+            <button class="button"><a href="{% url 'khaltirequest' camp_detail.id %}" class="donate_here">Donate
+                    Here</a></button>
             <br>
             <div style="float: right;">Date_added: {{camp_detail.Date_added}}</div>
         </div>
@@ -43,23 +44,23 @@
 {% if request.user == camp_detail.manager %}
 <div class="mt-5">
     <p class="text-center">
-    
-    <a class="btn btn-info px-5" style="margin-right: 1%;" href="{% url 'update' camp_detail.id %}"><b>
-        <i class="far fa-edit"></i> &nbsp; Update</b>
-    </a>
 
-    <a href="{% url 'delete' camp_detail.id %}" class="btn btn-danger px-5" style="margin-left: 1%;"><b>
-        <i class="far fa-trash-alt"></i> &nbsp; Delete</b>
-    </a>
-</p>
+        <a class="btn btn-info px-5" style="margin-right: 1%;" href="{% url 'update' camp_detail.id %}"><b>
+                <i class="far fa-edit"></i> &nbsp; Update</b>
+        </a>
+
+        <a href="{% url 'delete' camp_detail.id %}" class="btn btn-danger px-5" style="margin-left: 1%;"><b>
+                <i class="far fa-trash-alt"></i> &nbsp; Delete</b>
+        </a>
+    </p>
 </div>
 {% else %}
 
 {% endif %}
 <script>
-  const progress = document.querySelector(".progress-bar")
-  const progpercent = {{camp_detail.Collected}}/{{camp_detail.Target}};
-  progress.style.width = `${progpercent * 100}%`;
+    const progress = document.querySelector(".progress-bar")
+    const progpercent = {{ camp_detail.Collected }}/{{camp_detail.Target}};
+    progress.style.width = `${progpercent * 100}%`;
 </script>
 
 {% endblock content %}

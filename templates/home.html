@@ -55,7 +55,7 @@ Life Savior
 <br>
 
 
-<div class="row" style="margin-left: 10px;">
+{% comment %} <div class="row" style="margin-left: 10px;">
   {% for campaign in campaigns %}
   <div class="card" style="width: 31%; margin: 0.7%; background-color: rgba(220, 227, 230, 0.856);">
     <img src="{% if campaign.Image %}
@@ -75,8 +75,7 @@ Life Savior
       </div>
       <div class="progress_text">Rs. {{ campaign.Collected }} - Done</div>
       <br>
-      <br>
-      <a href="{% url 'khaltirequest_camp' campaign.id %}" class="btn btn-primary">Donate</a>
+      <a href="#"><button type="button" class="btn btn-warning dontate-khalti">Donate</button></a>
     </div>
   </div>
 
@@ -89,7 +88,7 @@ Life Savior
     pro_bars.style.width = `${progpercent * 100}%`;
   </script>
   {% endfor %}
-</div>
+</div> {% endcomment %}
 
 
 {% endblock content %}

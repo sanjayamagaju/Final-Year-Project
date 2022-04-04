@@ -1,8 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.models import Group
-from .models import Campaign
-from .models import OtherCampaign
-from .models import Gallery
+from .models import Gallery, OtherCampaign, Khalti
+
 
 # Register your models here.
 class CampaignAdmin(admin.ModelAdmin):
@@ -14,7 +13,7 @@ class CampaignAdmin(admin.ModelAdmin):
     list_filter = ('Name', 'Date_added')
 
 
-admin.site.register(Campaign)
 admin.site.register(OtherCampaign, CampaignAdmin)
 admin.site.unregister(Group)
 admin.site.register(Gallery)
+admin.site.register(Khalti)

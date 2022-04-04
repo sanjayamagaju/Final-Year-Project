@@ -19,12 +19,13 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from django.contrib import messages
-from .models import Campaign, Gallery, OtherCampaign
+from .models import Gallery, Khalti, OtherCampaign
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 from django.db.models import Q
-import requests
+import requests, json
 from django.http import JsonResponse
+
 
 
 # Create your views here.
@@ -32,7 +33,6 @@ from django.http import JsonResponse
 # homepage
 def home(request):
     context = {
-        'campaigns' : Campaign.objects.all(),
         'nav_bar' : 'home'
     }
     return render(request,'home.html', context)
@@ -56,7 +56,7 @@ def gallery(request):
 # othercampaign page
 def othercampaign(request):
     context = {
-        'other_campaigns' : OtherCampaign.objects.all()
+        'other_campaigns' : OtherCampaign.objects.all(),
     }
     return render(request, 'othercampaign.html', context)
 
@@ -65,6 +65,7 @@ def future_proofing(request):
     context = {
         
     }
+    
     return render(request, 'future_proofing.html', context)
 
 # khalti request view
@@ -74,18 +75,12 @@ def khaltirequest(request, id):
     }
     return render(request, 'khaltirequest.html', context)
 
-def khaltirequest_camp(request, id):
-    context = {
-        'khalti_api_2' : get_object_or_404(Campaign, pk=id)
-    }
-    return render(request, 'khaltirequest_camp.html', context)
-
 def khaltiverify(request):
     token = request.GET.get("token")
     amount = request.GET.get("amount")
     campaign_id = request.GET.get("campaign_id")
     campaign_name = request.GET.get("campaign_name")
-    print(token, amount, campaign_id, campaign_name)
+    # print(token, amount, campaign_id, campaign_name)
 
     url = "https://khalti.com/api/v2/payment/verify/"
     payload = {
@@ -96,53 +91,24 @@ def khaltiverify(request):
         "Authorization": "Key test_secret_key_ab4f4a7082cc41f6af3231fb36c82b95"
     }
 
-    camp_objs = OtherCampaign.objects.get(id=campaign_id, Name=campaign_name)
+    # camp_objs = OtherCampaign.objects.get(id=campaign_id, Name=campaign_name)
 
     response = requests.post(url, payload, headers = headers)
     resp_dict = response.json()
     if resp_dict.get("idx"):
-        success = True
-        # camp_objs.payment_completed = True
-        # camp_objs.save()
+        data = Khalti(
+            campaign_name = campaign_name,
+            amount = amount
+        )
+        data.save()
+        messages.success(request, "Donation successful :) Thank you for donation")
     else: 
-        success = False
-
-    data = {
-        "success" : success
-    }
-    return JsonResponse(data)
-
-def khaltiverify_camp(request):
-    token = request.GET.get("token")
-    amount = request.GET.get("amount")
-    camp_id = request.GET.get("camp_id")
-    camp_name = request.GET.get("camp_name")
-    print(token, amount, camp_id, camp_name)
-
-    url = "https://khalti.com/api/v2/payment/verify/"
-    payload = {
-        "token": token,
-        "amount": amount
-    }
-    headers = {
-        "Authorization": "Key test_secret_key_ab4f4a7082cc41f6af3231fb36c82b95"
-    }
-
-    camp_objs_camp = Campaign.objects.get(id=camp_id, Name=camp_name)
-
-    response_camp = requests.post(url, payload, headers = headers)
-    resp_dict_camp = response_camp.json()
-    if resp_dict_camp.get("idx"):
-        success = True
-        # camp_objs.payment_completed = True
-        # camp_objs.save()
-    else: 
-        success = False
-
-    data_camp = {
-        "success" : success
-    }
-    return JsonResponse(data_camp)
+        
+        
+    # data = {
+    #     "success" : success
+    # }
+        return JsonResponse(data)
 
 # detail page
 def detail(request, id):
@@ -151,7 +117,6 @@ def detail(request, id):
     }
     return render(request, 'detail.html', context)
 
-    
 
 # registerpage
 def registerPage(request):
@@ -245,7 +210,7 @@ def search(request):
         search_term = request.GET['search_term']
         search_results = OtherCampaign.objects.filter(
             Q(Name__icontains=search_term) |
-            Q(Info__iexact=search_term)
+            Q(Info__icontains=search_term)
 
         )
         context = {
@@ -256,3 +221,10 @@ def search(request):
     else:
         return redirect('home')
 
+
+# donation complete page
+def donation_complete(request):
+    context = {
+        
+    }
+    return render(request, 'donation-complete.html', context)

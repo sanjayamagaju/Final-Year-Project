@@ -18,6 +18,10 @@ body {
     transform: translate(-50%, -50%);
 }
 
+.dontate-khalti{
+  margin-left: 40%;
+}
+
 .Tre_camp {
     text-align: center;
 }
@@ -27,7 +31,7 @@ body {
 }
 
 .cont {
-    margin-top: 1%;
+  margin-top: 150px;
   }
 
   .image_camp {

@@ -10,6 +10,7 @@ urlpatterns = [
     path('logout/', views.logoutUser, name="logout"),
     path('othercampaign/', views.othercampaign, name="campaign"),
     path('donation_future_proofing/', views.future_proofing, name="future_proofing"),
+    path('donation_completed/', views.donation_complete, name="donation_complete"),
     path('detail/<int:id>/', views.detail, name='detail'),
     path('gallery/', views.gallery, name="gallery"),
 
@@ -18,7 +19,5 @@ urlpatterns = [
     path('othercampaign/delete/<int:pk>', views.CampaignDeleteView.as_view(), name="delete"),
 
     path('khalti-request/<int:id>/', views.khaltirequest, name='khaltirequest'),
-    path('khalti-request-camp/<int:id>/', views.khaltirequest_camp, name='khaltirequest_camp'),
     path('khaltiverify/', views.khaltiverify, name='khaltiverify'),
-    path('khaltiverify_camp/', views.khaltiverify_camp, name='khaltiverify_camp'),
 ]

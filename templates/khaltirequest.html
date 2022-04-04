@@ -31,6 +31,10 @@ Donation for {{khalti_api.Name}}
 
 <button type="button" id="payment-button" class="btn btn-success text-center dontate-khalti">Donate using Khalti</button>
 
+{% comment %} {% for message in messages %}
+	<p id="messages">{{message}}</p>
+{% endfor %} {% endcomment %}
+
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
     var config = {
