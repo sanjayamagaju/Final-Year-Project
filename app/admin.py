@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.models import Group
-from .models import Gallery, OtherCampaign, Khalti
+from .models import FuturePurpose, Gallery, OtherCampaign
 
 
 # Register your models here.
@@ -12,8 +12,13 @@ class CampaignAdmin(admin.ModelAdmin):
     search_fields = ('Name', 'Info')
     list_filter = ('Name', 'Date_added')
 
+class FupAdmin(admin.ModelAdmin):
+    list_display = ('id', 'token', 'amount')
+    list_display_links = ('id', 'token', 'amount')
+    list_per_page = 10
+
 
 admin.site.register(OtherCampaign, CampaignAdmin)
 admin.site.unregister(Group)
 admin.site.register(Gallery)
-admin.site.register(Khalti)
+admin.site.register(FuturePurpose, FupAdmin)

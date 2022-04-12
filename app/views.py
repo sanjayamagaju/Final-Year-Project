@@ -19,7 +19,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from django.contrib import messages
-from .models import Gallery, Khalti, OtherCampaign
+from .models import Gallery, OtherCampaign, FuturePurpose
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 from django.db.models import Q
@@ -61,12 +61,12 @@ def othercampaign(request):
     return render(request, 'othercampaign.html', context)
 
 # othercampaign page
-def future_proofing(request):
+def future_purpose(request):
     context = {
         
     }
     
-    return render(request, 'future_proofing.html', context)
+    return render(request, 'future_purpose.html', context)
 
 # khalti request view
 def khaltirequest(request, id):
@@ -96,19 +96,57 @@ def khaltiverify(request):
     response = requests.post(url, payload, headers = headers)
     resp_dict = response.json()
     if resp_dict.get("idx"):
-        data = Khalti(
-            campaign_name = campaign_name,
-            amount = amount
-        )
-        data.save()
-        messages.success(request, "Donation successful :) Thank you for donation")
+        success = True
+        OtherCampaign.objects.update(Amount=amount)
+        # sum = OtherCampaign.Collected
+        # sum = sum + OtherCampaign.Amount
+        # OtherCampaign.objects.update(Collected=sum)
     else: 
+        success = False
+    succ = {
+        'success' : success
+    }
+
+    return JsonResponse(succ)
+
+# khalti request for future purpose
+def future_khalti(request):
+    context = {
         
-        
-    # data = {
-    #     "success" : success
-    # }
-        return JsonResponse(data)
+    }
+    return render(request, 'future_khalti.html', context)
+
+def khaltiverify_future(request):
+    token = request.GET.get("token")
+    amount = request.GET.get("amount")
+
+    url = "https://khalti.com/api/v2/payment/verify/"
+    payload = {
+        "token": token,
+        "amount": amount
+    }
+    headers = {
+        "Authorization": "Key test_secret_key_48e4a75d471b420093957150969b830f"
+    }
+
+    response2 = requests.post(url, payload, headers = headers)
+    resp_dict2 = response2.json()
+    if resp_dict2.get("idx"):
+        success = True
+        data2 = FuturePurpose(
+            amount = amount,
+            token = token
+        )
+        data2.save()
+    else: 
+        success = False
+    succ2 = {
+        'success' : success
+    }
+
+    return JsonResponse(succ2)
+
+
 
 # detail page
 def detail(request, id):
@@ -222,9 +260,3 @@ def search(request):
         return redirect('home')
 
 
-# donation complete page
-def donation_complete(request):
-    context = {
-        
-    }
-    return render(request, 'donation-complete.html', context)
