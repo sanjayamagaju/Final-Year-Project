@@ -31,10 +31,10 @@ Search result for {{search_term}}
             <p>Info: {{other_campaign.Info}}</p>
             <br>
             <div class="progress">
-                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
-                    aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%"></div>
+                <div class="progress-bar bg-success" role="progressbar" aria-valuenow="75" aria-valuemin="0"
+                    aria-valuemax="100" style="width: 75%"></div>
             </div>
-            <div class="progress_text">75% - Done</div>
+            <div class="progress_text">Rs. {{ other_campaign.Collected }} - Done</div>
             <br>
             <button class="button"><a href="{% url 'khaltirequest' other_campaign.id %}" class="donate_here">Donate Here</a></button>
             <br>
@@ -43,6 +43,14 @@ Search result for {{search_term}}
         <br>
     </div>
 </div>
+<script>
+    var progress_bar = document.querySelectorAll(".progress-bar");
+    for (var i = 0; progress_bar[i]; i++) {
+      var progress_bars = progress_bar[i];
+      var progpercent = {{ other_campaign.Collected }} / {{other_campaign.Target}};
+    }
+    progress_bars.style.width = `${progpercent * 100}%`;
+  </script>
 {% endfor %}
 {% else %}
 <h1 class="text-center nrts">"No results found&nbsp;&nbsp;<i class="fas fa-sad-cry"></i><i class="fas fa-sad-cry"></i><i

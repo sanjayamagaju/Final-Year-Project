@@ -1,70 +1,85 @@
 body {
-    margin: auto;
+  margin: auto;
 }
+
 .centered {
-    color: white;
-    position: absolute;
-    font-size: 25px;
-    top: 65%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+  color: white;
+  position: absolute;
+  font-size: 25px;
+  top: 65%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .centered2 {
-    color: rgb(79, 255, 9);
-    position: absolute;
-    top: 76%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+  color: rgb(79, 255, 9);
+  position: absolute;
+  top: 76%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
-.dontate-khalti{
+.dontate-khalti {
   margin-left: 40%;
 }
 
 .Tre_camp {
-    text-align: center;
+  text-align: center;
 }
 
-.row{
-    width: 100%;
+.victim {
+  font-size: 18px;
+  text-decoration: none;
+  color: rgb(0, 0, 0);
+}
+
+.victim:hover {
+  color: rgb(73, 67, 67);
+}
+
+.row {
+  width: 100%;
 }
 
 .cont {
   margin-top: 150px;
-  }
+}
 
-  .image_camp {
-    width: 100%;
-    height: 60%;
-    padding-top: 10px;
-    overflow: hidden;
-  }
+.image_camp {
+  width: 100%;
+  height: 60%;
+  padding-top: 10px;
+  overflow: hidden;
+}
 
-  .text_camp {
-    color: rgb(0, 0, 0);
-    font-size: 14px;
-    padding: auto;
-  }
+.text_camp {
+  color: rgb(0, 0, 0);
+  font-size: 14px;
+  padding: auto;
+}
 
-  .btn-primary {
-    width: 100%;
-    background-color: rgb(118, 219, 118);
-    border-radius: 30%;
-    border: 2px dotted blue;
-  }
+.btn-primary {
+  width: 100%;
+  background-color: rgb(118, 219, 118);
+  border-radius: 30%;
+  border: 2px dotted blue;
+}
 
-  .carousel-inner {
-    margin-top: 1%;
-    width: 115%;
-    height: auto;
-    margin-left: -7.4%;
+.carousel-inner {
+  margin-top: 1%;
+  width: 115%;
+  height: auto;
+  margin-left: -7.4%;
 
-  }
+}
 
-  .pr_text {
-    float: right;
-    color: blue;
-    padding-top: 8px;
-  }
+.pr_text {
+  float: right;
+  color: blue;
+  padding-top: 8px;
+}
 
+.recent-act{
+  width: 50% !important;
+  margin-left: 24%;
+}

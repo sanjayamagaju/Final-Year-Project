@@ -4,6 +4,7 @@ from multiprocessing import Manager, context, managers
 from pyexpat import model
 from re import template
 import re
+from tkinter import TOP
 from tokenize import Name
 from typing_extensions import Self
 from urllib import request
@@ -11,15 +12,17 @@ from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
 from django.views import View
+from matplotlib.cbook import maxdict
 from matplotlib.pyplot import get
 from psutil import users
 from django.contrib.auth.models import User
+from pyparsing import col
 from .forms import CreateUserForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from django.contrib import messages
-from .models import Gallery, OtherCampaign, FuturePurpose
+from .models import Gallery, LeaderBoard, OtherCampaign, FuturePurpose
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 from django.db.models import Q
@@ -32,8 +35,12 @@ from django.http import JsonResponse
 @login_required(login_url='login')
 # homepage
 def home(request):
+    trendings = OtherCampaign.objects.filter().order_by('-Donation_count')[:5]
+    leaderboard = LeaderBoard.objects.filter().order_by('-donation_amt')[:8]
     context = {
-        'nav_bar' : 'home'
+        'nav_bar' : 'home',
+        'leaderboards' : leaderboard,
+        'trendings' : trendings,
     }
     return render(request,'home.html', context)
 
@@ -78,29 +85,51 @@ def khaltirequest(request, id):
 def khaltiverify(request):
     token = request.GET.get("token")
     amount = request.GET.get("amount")
+    collected = request.GET.get("collected")
+    donation_count = request.GET.get("donation_counter")
     campaign_id = request.GET.get("campaign_id")
     campaign_name = request.GET.get("campaign_name")
-    # print(token, amount, campaign_id, campaign_name)
 
     url = "https://khalti.com/api/v2/payment/verify/"
     payload = {
         "token": token,
-        "amount": amount
+        "amount": amount,
     }
     headers = {
         "Authorization": "Key test_secret_key_ab4f4a7082cc41f6af3231fb36c82b95"
     }
 
-    # camp_objs = OtherCampaign.objects.get(id=campaign_id, Name=campaign_name)
-
     response = requests.post(url, payload, headers = headers)
     resp_dict = response.json()
+    # print(resp_dict)
+    user_name = resp_dict.get("user")
+    user = user_name['name']
+    # print(user)
+    date_donate = resp_dict.get("created_on")
+    product_identity = resp_dict.get("product_identity")
     if resp_dict.get("idx"):
         success = True
+
+        data = LeaderBoard(
+            token = token,
+            donor = user,
+            donation_amt = amount,
+            camp_detail = campaign_name,
+            date_donation = date_donate
+        )
+        data.save()
+
+
+        collected = int(collected)
+        amount = int(amount)
+        dc = int(donation_count)
+        dc = dc + 1
+        collected += amount/100
+        
         OtherCampaign.objects.update(Amount=amount)
-        # sum = OtherCampaign.Collected
-        # sum = sum + OtherCampaign.Amount
-        # OtherCampaign.objects.update(Collected=sum)
+        OtherCampaign.objects.update(Collected=collected)
+        OtherCampaign.objects.update(Donation_count=dc)
+
     else: 
         success = False
     succ = {
@@ -258,5 +287,3 @@ def search(request):
         return render(request, 'search.html', context)
     else:
         return redirect('home')
-
-

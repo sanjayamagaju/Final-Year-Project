@@ -26,8 +26,8 @@
         <div class="fixed-top ft">
             <nav class="navbar navbar-light bg-light">
                 <div class="container-fluid">
-                    <img src="{% static './Images/Heart.png' %}" class="img-thumbnail" alt="logo" height="100px"
-                        width="100px">
+                    <a href="{% url 'home' %}"><img src="{% static './Images/logo2.jpg' %}" class="img-thumbnail" alt="logo" height="auto"
+                        width="120px"></a>
 
                     <form class="d-flex" action="{% url 'search' %}" method="GET">
                         <input class="form-control me-2" type="search" placeholder="Search Campaigns..."
@@ -56,7 +56,7 @@
                     </li>
                     <li>
                         <a class="dropdown-item" href="{% url 'future_purpose' %}"><i class="fad fa-clock"></i>&nbsp;Donate for Future
-                            Proofing</a>
+                            Purpose</a>
                     </li>
                 </ul>
                 <!-- to check if user is logged in or not using is_authenticated -->
@@ -85,8 +85,8 @@
         <div class="row-footer">
             <div class="column-footer">
                 <h2><b><u>Life Savior</u></b></h2>
-                <img src="{% static './Images/Heart.png' %}" class="img-thumbnail" alt="logo" height="100px"
-                    width="100px">
+                <a href="{% url 'home' %}"><img src="{% static './Images/logo2.jpg' %}" class="img-thumbnail" alt="logo" height="100px"
+                    width="100px"></a>
                 <br>
                 <p>Life Savior: Trusted online fundraising platform for someone who are financially weak for their
                     treatment. Start a donation in few minutes. Get help. Give kindness. Save Life.</p>

@@ -13,16 +13,23 @@ class OtherCampaign(models.Model):
     Image = models.ImageField(upload_to='images/')
     Target = models.IntegerField()
     Collected = models.IntegerField(default=0)
-    Amount = models.IntegerField(null=True, default=0)
     Info = models.CharField(max_length=300)
     Date_added = models.DateField(auto_now_add=True)
 
-    def calculate_total(self):
-        return self.Collected+int((self.Amount)/100)
+    Amount = models.IntegerField(default=0)
+    Donation_count = models.IntegerField(default=0)
 
-    def save(self, *args, **kwargs):
-        self.Collected = self.calculate_total()
-        super().save(*args, **kwargs)
+    # def calculate_total(self):
+    #     return self.Collected+int((self.Amount)/100)
+
+    # def save(self, *args, **kwargs):
+    #     self.Collected = self.calculate_total()
+    #     super().save(*args, **kwargs)
+
+    # # donations counter
+    # @property
+    # def don_ct(self):
+    #     return self.Dontaion_count.all().count()
 
     def __str__(self):
         return self.Name
@@ -43,6 +50,17 @@ class Gallery(models.Model):
 class FuturePurpose(models.Model):
     token = models.CharField(max_length=50, default=None)
     amount = models.IntegerField()
+
+    def __str__(self):
+        return self.token
+
+# leaderboard
+class LeaderBoard(models.Model):
+    token = models.CharField(max_length=50, default=None)
+    donor = models.CharField(max_length=80)
+    donation_amt = models.IntegerField()
+    camp_detail = models.CharField(max_length=30)
+    date_donation = models.CharField(max_length=100)
 
     def __str__(self):
         return self.token
