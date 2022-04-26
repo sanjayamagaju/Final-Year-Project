@@ -50,7 +50,7 @@ Donation for {{khalti_api.Name}}
         "eventHandler": {
             onSuccess(payload) {
                 // hit merchant api for initiating verfication
-                axios.get("/khaltiverify/", {
+                axios.get("/khaltiverify/{{khalti_api.id}}", {
                     params: {
                         "token": payload.token,
                         "amount": payload.amount,

@@ -7,43 +7,89 @@ How It Works
 {% endblock title %}
 
 {% block content %}
+
+<style>
+  .acc-item{
+    border: 3px dashed rgb(12, 139, 25);
+    margin: 15px;
+  }
+  .hd{
+    color: rgb(12, 139, 25);
+  }
+  .acc-bd{
+    background-color: rgb(12, 139, 25);
+    margin: 20px;
+  }
+  .detail-hiw{
+    color: rgb(255, 255, 255);
+    font-family: 'Times New Roman', Times, serif;
+    text-align: justify;
+  }
+</style>
+
+
 <h3 class="text-center" style="margin-top: 150px;">Welcome to "Life Savior"</h3>
-<br>
+<h5 class="text-center">-->This is how our System works<--</h5>
+<hr>
 <br>
 <div class="accordion" id="accordionExample">
-    <div class="accordion-item">
+    <div class="accordion-item acc-item">
       <h2 class="accordion-header" id="headingOne">
         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-          Accordion Item #1
+         <strong class="hd"> 1. LogIn To The System</strong>
         </button>
       </h2>
       <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-        <div class="accordion-body">
-          <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+        <div class="accordion-body acc-bd">
+          <p class="detail-hiw">Before accessing the platform users have to register their account if they are new otherwise, 
+            they can login to the system and access the platform. To create their account, they have to provide username, email, 
+            password which will be saved in the database after checking their validity which helps them to login for next time easily.</p>
         </div>
       </div>
     </div>
-    <div class="accordion-item">
+    <div class="accordion-item acc-item">
       <h2 class="accordion-header" id="headingTwo">
         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-          Accordion Item #2
+          <strong class="hd"> 2. Visit Different Campaigns or Add/Update/Delete Them</strong>
         </button>
       </h2>
       <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-        <div class="accordion-body">
-          <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+        <div class="accordion-body acc-bd">
+          <p class="detail-hiw">After successfully completing account register and login process, user will be redirected to the home page. 
+            They can view the running campaigns, donate certain amount using the Khalti API and also, they can create the campaign if needed. 
+            Only that user who has created the campaign can update or delete the campaign. Other users can only view and has no chance of editing 
+            and deleting the campaigns. On clicking the victim’s name, the user will be redirected to the detail page where they can see only that 
+            clicked campaign. Also, user can search for certain campaign by searching for the victim’s name or description of that campaign.</p>
         </div>
       </div>
     </div>
-    <div class="accordion-item">
+    <div class="accordion-item acc-item">
       <h2 class="accordion-header" id="headingThree">
         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-          Accordion Item #3
+          <strong class="hd"> 3. Make Donation Using Khalti API</strong>
         </button>
       </h2>
       <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-        <div class="accordion-body">
-          <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+        <div class="accordion-body acc-bd">
+          <p class="detail-hiw">There is a donate button in every campaigns. When user/donors click on that button it will redirect them to a 
+            page where they will be appreciated for donating along with the donate using Khalti button. On clicking this button, they will be 
+            asked the amount to donate and after putting amount they will be redirected to the Khalti API where they have to login to their 
+            Khalti account using phone number and password. If the account is valid Khalti will send OTP code. Using this code, users can 
+            successfully donate on that campaign.</p>
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item acc-item">
+      <h2 class="accordion-header" id="headingFour">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+          <strong class="hd"> 4. Donation For Future Purpose</strong>
+        </button>
+      </h2>
+      <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
+        <div class="accordion-body acc-bd">
+          <p class="detail-hiw">There is another page named Donation for future purpose alongside the donation for campaign page. This page is 
+            for collecting some donation amount for future purpose when some victim might need huge money suddenly like millions of dollars 
+            which is hard to complete on few days. This page is I believe one of the best features which no other donation platform provides.</p>
         </div>
       </div>
     </div>

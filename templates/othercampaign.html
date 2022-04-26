@@ -27,11 +27,12 @@ Other Campaigns
 <div class="container" style="background-color:#f1f1f1">
   <div class="row">
     <div class="column-33">
-      <img src="{% if other_campaign.Image %}
+      <a href="{% url 'detail' other_campaign.id %}"><img src="{% if other_campaign.Image %}
       {{other_campaign.Image.url}}
       {% else %}
       {% static './Images/blank.jpg' %}
       {% endif %}" class="camp_img" alt="App">
+      </a>
     </div>
     <div class="column-66">
       <a href="{% url 'detail' other_campaign.id %}" class="victim"><b><u>Victim: "{{other_campaign.Name}}"</u></b></a>

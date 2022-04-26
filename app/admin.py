@@ -18,8 +18,8 @@ class FupAdmin(admin.ModelAdmin):
     list_per_page = 10
 
 class LeaderboardAdmin(admin.ModelAdmin):
-    list_display = ('id', 'token', 'donor', 'donation_amt', 'camp_detail')
-    list_display_links = ('id', 'token', 'donor')
+    list_display = ('token', 'donor', 'donation_amt', 'camp_detail')
+    list_display_links = ('token', 'donor')
     list_per_page = 10
 
 

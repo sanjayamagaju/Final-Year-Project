@@ -82,14 +82,14 @@ def khaltirequest(request, id):
     }
     return render(request, 'khaltirequest.html', context)
 
-def khaltiverify(request):
+def khaltiverify(request, id):
     token = request.GET.get("token")
     amount = request.GET.get("amount")
     collected = request.GET.get("collected")
     donation_count = request.GET.get("donation_counter")
     campaign_id = request.GET.get("campaign_id")
     campaign_name = request.GET.get("campaign_name")
-
+    
     url = "https://khalti.com/api/v2/payment/verify/"
     payload = {
         "token": token,
@@ -101,12 +101,12 @@ def khaltiverify(request):
 
     response = requests.post(url, payload, headers = headers)
     resp_dict = response.json()
-    # print(resp_dict)
+    print(resp_dict)
     user_name = resp_dict.get("user")
     user = user_name['name']
     # print(user)
     date_donate = resp_dict.get("created_on")
-    product_identity = resp_dict.get("product_identity")
+    # product_identity = resp_dict.get("product_identity")
     if resp_dict.get("idx"):
         success = True
 
@@ -119,16 +119,15 @@ def khaltiverify(request):
         )
         data.save()
 
-
+        # if product_identity == campaign_id:
         collected = int(collected)
         amount = int(amount)
         dc = int(donation_count)
         dc = dc + 1
         collected += amount/100
         
-        OtherCampaign.objects.update(Amount=amount)
-        OtherCampaign.objects.update(Collected=collected)
-        OtherCampaign.objects.update(Donation_count=dc)
+        
+        OtherCampaign.objects.filter(id=campaign_id).update(Amount=amount, Collected=collected, Donation_count=dc)
 
     else: 
         success = False

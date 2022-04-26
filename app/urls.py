@@ -18,7 +18,7 @@ urlpatterns = [
     path('othercampaign/delete/<int:pk>', views.CampaignDeleteView.as_view(), name="delete"),
 
     path('khalti-request/<int:id>/', views.khaltirequest, name='khaltirequest'),
-    path('khaltiverify/', views.khaltiverify, name='khaltiverify'),
+    path('khaltiverify/<int:id>/', views.khaltiverify, name='khaltiverify'),
     path('khaltiverify_future_purpose/', views.khaltiverify_future, name='khaltiverify_future'),
     path('khaltirequest_future_purpose/', views.future_khalti, name='future_khalti')
 ]
