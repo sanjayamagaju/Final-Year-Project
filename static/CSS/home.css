@@ -6,7 +6,8 @@ body {
   color: white;
   position: absolute;
   font-size: 25px;
-  top: 65%;
+  top: 50%;
+  bottom: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
@@ -14,13 +15,20 @@ body {
 .centered2 {
   color: rgb(79, 255, 9);
   position: absolute;
-  top: 76%;
+  top: 56%;
+  bottom: 44%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
 
+.card-bd{
+  width: 31%; 
+  margin: 0.7%; 
+  background-color: rgba(220, 227, 230, 0.856);
+}
+
 .dontate-khalti {
-  margin-left: 40%;
+  margin-left: 35%;
 }
 
 .Tre_camp {
@@ -82,4 +90,54 @@ body {
 .recent-act{
   width: 50% !important;
   margin-left: 24%;
+}
+
+/* responsive */
+@media screen and (max-width: 1000px) {
+  .centered {
+    font-size: 18px;
+  }
+  
+  .centered2 {
+    font-size: 22px;
+  }
+  .dontate-khalti {
+    margin-left: 30%;
+  }
+}
+
+@media screen and (max-width: 690px) {
+  .centered {
+    top: 42%;
+    font-size: 12px;
+  }
+  
+  .centered2 {
+    top: 46%;
+    font-size: 16px;
+  }
+  .dontate-khalti {
+    margin-left: 40%;
+  }
+  .card-bd{
+    width: 97%; 
+    margin: 0.7%; 
+  }
+  .recent-act{
+    width: 70% !important;
+    margin-left: 14%;
+    font-size: 12px;
+  }
+  
+}
+
+@media screen and (max-width: 480px) {
+  .centered {
+    font-size: 8px;
+  }
+  
+  .centered2 {
+    font-size: 12px;
+  }
+  
 }

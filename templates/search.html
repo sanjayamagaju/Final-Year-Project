@@ -9,7 +9,7 @@ Search result for {{search_term}}
 {% block content %}
 <link rel="stylesheet" type="text/CSS" href="{% static './CSS/campaign.css' %}">
 
-<h2 class="heading font-weight-light text-center">Search result for "{{search_term}}"</h2>
+<h2 class="heading font-weight-light text-center" style="margin-top: 150px;">Search result for "{{search_term}}"</h2>
 <hr>
 
 {% if other_campaigns %}
@@ -36,7 +36,7 @@ Search result for {{search_term}}
             </div>
             <div class="progress_text">Rs. {{ other_campaign.Collected }} - Done</div>
             <br>
-            <button class="button"><a href="{% url 'khaltirequest' other_campaign.id %}" class="donate_here">Donate Here</a></button>
+            <a href="{% url 'khaltirequest' other_campaign.id %}"><button class="button donate_here">Donate Here</button></a>
             <br>
             <div style="float: right;">Date_added: {{other_campaign.Date_added}}</div>
         </div>

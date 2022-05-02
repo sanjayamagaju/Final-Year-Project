@@ -41,35 +41,32 @@ body {
 }
 
 .column-66 {
-    width: 60%;
+    width: 50%;
     padding: 3%;
     vertical-align: middle;
 }
 
 .column-33 {
     float: left;
-    width: 40%;
+    width: 50%;
     padding: 20px;
     border-right: 10px solid rgb(255, 255, 255);
 }
 
-.button {
-    margin-left: 40%;
+.donate_here {
+    margin-left: 30%;
     border: none;
     padding: 14px 28px;
     border-radius: 40px;
     cursor: pointer;
     background-color: #04AA6D;
-}
-
-.button:hover {
-    background-color: #db457f;
-}
-
-.donate_here {
     text-decoration: none;
     color: white;
     font-size: 16px;
+}
+
+.donate_here:hover {
+    background-color: #db457f;
 }
 
 .donate_here:hover {
@@ -80,19 +77,6 @@ body {
     display: block;
     height: 100%;
     max-width: 100%;
-}
-
-@media screen and (max-width: 1000px) {
-
-    .column-66,
-    .column-33 {
-        width: 100%;
-        text-align: center;
-    }
-
-    .camp_img {
-        margin: auto;
-    }
 }
 
 .victim {
@@ -113,4 +97,34 @@ body {
     float: right;
     color: blue;
     padding-top: 8px;
+}
+.date_add{
+    float: right;
+}
+
+/* responsive */
+@media screen and (max-width: 1000px) {
+
+    .column-66,
+    .column-33 {
+        width: 100%;
+        text-align: center;
+        border: none;
+    }
+    .camp_img {
+        margin: auto;
+    }
+    .donate_here {
+        margin-left: 9%;
+        padding: 8px 15px;
+    }
+}
+
+@media screen and (max-width: 690px) {
+    .victim {
+        font-size: 18px;
+    }
+    .target,.progress_text,.date_add{
+        font-size: 14px;
+    }
 }

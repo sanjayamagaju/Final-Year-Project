@@ -9,7 +9,7 @@
 {% block content %}
 <link rel="stylesheet" type="text/CSS" href="{% static './CSS/campaign.css' %}">
 
-<div class="container" style="background-color:#f1f1f1">
+<div class="container" style="background-color:#f1f1f1; margin-top: 150px;">
     <div class="row">
         <div class="column-33">
             <img src="{% if camp_detail.Image %}
@@ -31,8 +31,7 @@
             </div>
             <div class="progress_text">Rs. {{ camp_detail.Collected }} - Done</div>
             <br>
-            <button class="button"><a href="{% url 'khaltirequest' camp_detail.id %}" class="donate_here">Donate
-                    Here</a></button>
+            <a href="{% url 'khaltirequest' camp_detail.id %}"><button class="button donate_here">Donate Here</button></a>
             <br>
             <div style="float: right;">Date_added: {{camp_detail.Date_added}}</div>
         </div>

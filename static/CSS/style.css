@@ -23,7 +23,7 @@ Header {
 }
 
 .topnav a:hover {
-    background-color: #ddd;
+    background-color: #0d7650;
     color: black;
 }
 
@@ -152,20 +152,31 @@ Header {
     border-top: 2px solid rgb(49, 45, 45);
 }
 
+.fb-page{
+    text-decoration: none;
+    color: white;
+}
+.fb-page:hover{
+    color: rgb(170, 170, 170);
+}
+.ft-h2{
+    padding-left: 15%;
+}
+
 
 /* resopnsive */
-@media screen and (max-width: 890px) {
-    .topnav a:not(:first-child) {
+@media screen and (max-width: 870px) {
+    .topnav a {
         display: none;
     }
 
     .topnav a.icon {
-        float: right;
+        float: left;
         display: block;
     }
 }
 
-@media screen and (max-width: 890px) {
+@media screen and (max-width: 870px) {
     .topnav.responsive {
         position: relative;
     }
@@ -181,7 +192,32 @@ Header {
         display: block;
         text-align: left;
     }
+    .row-footer{
+        font-size: 12px;
+    }
 }
+
+@media screen and (max-width: 660px) {
+    .cl-ft{
+        width: 50%;
+    }
+    .ft-h2{
+        font-size: 17px;
+        padding-left: 0;
+    }
+    .column-footer {
+        width: 100%;
+        height: auto;
+        padding: 10px;
+    }
+    .footer-ul{
+        padding-left: 15px;
+    }
+    .copyright{
+        font-size: 15px
+    }
+}
+
 
 @media screen and (max-width: 450px) {
     .d-flex{

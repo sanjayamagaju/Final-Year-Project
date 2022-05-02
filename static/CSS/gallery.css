@@ -69,6 +69,7 @@ body {
 /* The Modal (background) */
 .modal {
     display: none;
+    margin-top: 100px;
     /* Hidden by default */
     position: fixed;
     /* Stay in place */
@@ -141,8 +142,8 @@ body {
 /* The Close Button */
 .close {
     position: absolute;
-    top: 23%;
-    right: 20%;
+    top: 10%;
+    right: 5%;
     color: #f1f1f1;
     font-size: 40px;
     font-weight: bold;
@@ -156,9 +157,15 @@ body {
     cursor: pointer;
 }
 
-/* 100% Image Width on Smaller Screens */
-@media only screen and (max-width: 700px) {
+/* responsive */
+@media only screen and (max-width: 690px) {
     .modal-content {
-        width: 100%;
+        width: 80%;
+    }
+    .modal{
+        margin-top: 140px;
+    }
+    .close {
+        top: 7%;
     }
 }

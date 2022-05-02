@@ -1,5 +1,6 @@
 from ast import If
 from dataclasses import fields
+import email
 from multiprocessing import Manager, context, managers
 from pyexpat import model
 from re import template
@@ -16,7 +17,7 @@ from matplotlib.cbook import maxdict
 from matplotlib.pyplot import get
 from psutil import users
 from django.contrib.auth.models import User
-from pyparsing import col
+# from pyparsing import col
 from .forms import CreateUserForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -28,6 +29,8 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.db.models import Q
 import requests, json
 from django.http import JsonResponse
+
+import smtplib
 
 
 
@@ -101,7 +104,6 @@ def khaltiverify(request, id):
 
     response = requests.post(url, payload, headers = headers)
     resp_dict = response.json()
-    print(resp_dict)
     user_name = resp_dict.get("user")
     user = user_name['name']
     # print(user)
@@ -110,6 +112,22 @@ def khaltiverify(request, id):
     if resp_dict.get("idx"):
         success = True
 
+# mail sending to donors
+        fromaddr = 'lifesaviorfyp32@gmail.com'  
+        toaddrs  = request.user.email  
+        msg = 'Thank you for your donation for ' + campaign_name  
+
+        username = 'lifesaviorfyp32@gmail.com'  
+        password = 'lifesavior12345@'
+
+        server = smtplib.SMTP('smtp.gmail.com', 587)  
+        server.ehlo()
+        server.starttls()
+        server.login(username, password)  
+        server.sendmail(fromaddr, toaddrs, msg)  
+        server.quit()
+
+# leaderboard model
         data = LeaderBoard(
             token = token,
             donor = user,
@@ -119,7 +137,7 @@ def khaltiverify(request, id):
         )
         data.save()
 
-        # if product_identity == campaign_id:
+        # update values in model
         collected = int(collected)
         amount = int(amount)
         dc = int(donation_count)

@@ -24,13 +24,13 @@ Life Savior
     </div>
     <div class="carousel-inner">
       <div class="carousel-item active">
-        <img src="{% static './Images/front.jpg' %}" class="d-block w-100" alt="...">
+        <img src="{% static './Images/front.jpg' %}" class="d-block w-100" alt"slider">
       </div>
       <div class="carousel-item">
-        <img src="{% static './Images/front1.jpg' %}" class="d-block w-100" alt="...">
+        <img src="{% static './Images/front1.jpg' %}" class="d-block w-100" alt"slider">
       </div>
       <div class="carousel-item">
-        <img src="{% static './Images/front2.png' %}" class="d-block w-100" alt="...">
+        <img src="{% static './Images/front2.png' %}" class="d-block w-100" alt"slider">
       </div>
     </div>
     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
@@ -58,7 +58,7 @@ Life Savior
 
 <div class="row" style="margin-left: 10px;">
   {% for trending in trendings %}
-  <div class="card" style="width: 31%; margin: 0.7%; background-color: rgba(220, 227, 230, 0.856);">
+  <div class="card card-bd">
     <img src="{% if trending.Image %}
                 {{trending.Image.url}}
                 {% else %}
