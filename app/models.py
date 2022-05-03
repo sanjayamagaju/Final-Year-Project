@@ -19,18 +19,6 @@ class OtherCampaign(models.Model):
     Amount = models.IntegerField(default=0)
     Donation_count = models.IntegerField(default=0)
 
-    # def calculate_total(self):
-    #     return self.Collected+int((self.Amount)/100)
-
-    # def save(self, *args, **kwargs):
-    #     self.Collected = self.calculate_total()
-    #     super().save(*args, **kwargs)
-
-    # # donations counter
-    # @property
-    # def don_ct(self):
-    #     return self.Dontaion_count.all().count()
-
     def __str__(self):
         return self.Name
 
